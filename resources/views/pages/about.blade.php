@@ -1,12 +1,11 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>About - Incremently</title>
-</head>
-<body>
-    <h1>About Incremently</h1>
+@extends('app')
 
-    <p>Here is all the information about the program.</p>
-</body>
-</html>
+@section('content')
+    <div class="row">
+        <div class="large-12 columns">
+            <h1>About Incremently</h1>
+
+            <p>Here is all the information about the program.</p>
+        </div>
+    </div>
+@endsection
