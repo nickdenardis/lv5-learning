@@ -16,6 +16,6 @@
 
 <div class="row">
     <div class="large-12 columns">
-        {!! Form::submit($submitButtonText, ['class="button radius"']) !!}
+        {!! Form::submit($submitButtonText, ['class' => 'button radius']) !!}
     </div>
 </div>

@@ -14,7 +14,7 @@
 Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index');
 
-Route::get('about', 'PagesController@about');
+Route::get('about', ['middleware' => 'admin', 'uses' => 'PagesController@about']);
 Route::resource('emails', 'EmailsController');
 
 Route::controllers([

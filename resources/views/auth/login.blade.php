@@ -32,7 +32,7 @@
 
                 <div class="row">
                     <div class="large-3 medium-6 columns">
-                        {!! Form::submit('Login', ['class="button radius"']) !!}
+                        {!! Form::submit('Login', ['class' => 'button radius']) !!}
                     </div>
                     <div class="large-9 medium-6 columns">
                         <p class="right"><a href="/password/email">Forgot Your Password?</a></p>

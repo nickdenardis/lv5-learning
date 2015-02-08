@@ -24,7 +24,7 @@
 
                 <div class="row">
                     <div class="large-12 columns">
-                        {!! Form::submit('Send Password Reset', ['class="button radius"']) !!}
+                        {!! Form::submit('Send Password Reset', ['class' => 'button radius']) !!}
                     </div>
                 </div>
 

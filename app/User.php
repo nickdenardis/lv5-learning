@@ -41,4 +41,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasMany('Incremently\Email');
     }
 
+
+    /**
+     * Is the user an admin in the system
+     *
+     * @return bool
+     */
+    public function isAdmin(){
+        return false;
+    }
+
 }
