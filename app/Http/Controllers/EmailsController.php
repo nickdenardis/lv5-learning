@@ -10,7 +10,7 @@ use Incremently\Http\Requests\EmailRequest;
 class EmailsController extends Controller {
 
     public function __construct(){
-        $this->middleware('auth', ['except' => 'index']);
+        $this->middleware('auth');
         $this->middleware('admin', ['only' => 'all']);
     }
 
