@@ -7,6 +7,14 @@
 
             {!! Html::link('emails/create', 'Add an Email', ['class' => 'button radius']) !!}
 
+            @if (Auth::user()->isAdmin())
+                <dl class="sub-nav">
+                    <dt>Filter:</dt>
+                    <dd class="active"><a href="{{ action('EmailsController@index') }}">Yours</a></dd>
+                    <dd><a href="{{ action('EmailsController@all') }}">All</a></dd>
+                </dl>
+            @endif
+
             <table>
                 <thead>
                     <tr>

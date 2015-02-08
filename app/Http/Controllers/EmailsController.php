@@ -11,6 +11,7 @@ class EmailsController extends Controller {
 
     public function __construct(){
         $this->middleware('auth', ['except' => 'index']);
+        $this->middleware('admin', ['only' => 'all']);
     }
 
 	/**
@@ -20,10 +21,21 @@ class EmailsController extends Controller {
 	 */
 	public function index()
 	{
-		$emails = Email::latest('updated_at')->get();
+        $emails = Auth::user()->emails()->latest( 'updated_at' )->get();
 
         return view('emails.index', compact('emails'));
 	}
+
+    /**
+     * Display a list of all emails in the system
+     *
+     * @return \Illuminate\View\View
+     */
+    public function all(){
+        $emails = Email::latest('updated_at')->get();
+
+        return view('emails.all', compact('emails'));
+    }
 
 	/**
 	 * Show the form for creating a new resource.
