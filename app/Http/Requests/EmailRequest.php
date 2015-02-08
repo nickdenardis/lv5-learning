@@ -2,7 +2,7 @@
 
 use Incremently\Http\Requests\Request;
 
-class CreateEmailRequest extends Request {
+class EmailRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.

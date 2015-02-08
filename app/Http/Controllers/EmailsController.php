@@ -3,8 +3,8 @@
 use Incremently\Email;
 use Incremently\Http\Requests;
 use Incremently\Http\Controllers\Controller;
-
-use Incremently\Http\Requests\CreateEmailRequest;
+use Illuminate\Http\Request;
+use Incremently\Http\Requests\EmailRequest;
 
 class EmailsController extends Controller {
 
@@ -33,10 +33,10 @@ class EmailsController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param CreateEmailRequest $request
+     * @param EmailRequest $request
      * @return Response
      */
-	public function store(CreateEmailRequest $request)
+	public function store(EmailRequest $request)
     {
         Email::create($request->all());
 
@@ -64,18 +64,25 @@ class EmailsController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+        $email = Email::findOrFail($id);
+
+		return view('emails.edit', compact('email'));
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int $id
+     * @param EmailRequest $request
+     * @return Response
+     */
+	public function update($id, EmailRequest $request)
 	{
-		//
+        $email = Email::findOrFail($id);
+
+        $email->update($request->all());
+
+        return redirect('emails');
 	}
 
 	/**
