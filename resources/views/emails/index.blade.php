@@ -5,6 +5,8 @@
         <div class="large-12 columns">
             <h1>Emails</h1>
 
+            {!! Html::link('emails/create', 'Add an Email', ['class' => 'button radius']) !!}
+
             <table>
                 <thead>
                     <tr>

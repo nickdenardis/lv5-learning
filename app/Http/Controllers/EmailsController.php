@@ -4,7 +4,7 @@ use Incremently\Email;
 use Incremently\Http\Requests;
 use Incremently\Http\Controllers\Controller;
 
-use Illuminate\Http\Request;
+use Request;
 
 class EmailsController extends Controller {
 
@@ -15,7 +15,7 @@ class EmailsController extends Controller {
 	 */
 	public function index()
 	{
-		$emails = Email::all();
+		$emails = Email::latest('updated_at')->get();
 
         return view('emails.index', compact('emails'));
 	}
@@ -27,7 +27,7 @@ class EmailsController extends Controller {
 	 */
 	public function create()
 	{
-		//
+        return view('emails.create');
 	}
 
 	/**
@@ -37,7 +37,11 @@ class EmailsController extends Controller {
 	 */
 	public function store()
 	{
-		//
+        $input = Request::all();
+
+        Email::create($input);
+
+        return redirect('emails');
 	}
 
 	/**
