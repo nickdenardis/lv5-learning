@@ -60,6 +60,8 @@ class EmailsController extends Controller {
 
         Auth::user()->emails()->save($email);
 
+        flash()->success('Successfully added email!');
+
         return redirect('emails');
 	}
 
@@ -101,6 +103,8 @@ class EmailsController extends Controller {
         $email = Email::findOrFail($id);
 
         $email->update($request->all());
+
+        flash()->success('Successfully edited email!');
 
         return redirect('emails');
 	}

@@ -146,6 +146,8 @@ return [
 		'Incremently\Providers\EventServiceProvider',
 		'Incremently\Providers\RouteServiceProvider',
 
+        'Laracasts\Flash\FlashServiceProvider',
+
 	],
 
 	/*
@@ -195,6 +197,7 @@ return [
 		'View'      => 'Illuminate\Support\Facades\View',
         'Form'      => 'Illuminate\Html\FormFacade',
         'Html'      => 'Illuminate\Html\HtmlFacade',
+        'Flash' => 'Laracasts\Flash\Flash',
 	],
 
 ];
