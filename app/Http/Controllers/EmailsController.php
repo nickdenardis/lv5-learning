@@ -4,7 +4,7 @@ use Incremently\Email;
 use Incremently\Http\Requests;
 use Incremently\Http\Controllers\Controller;
 
-use Request;
+use Incremently\Http\Requests\CreateEmailRequest;
 
 class EmailsController extends Controller {
 
@@ -30,16 +30,15 @@ class EmailsController extends Controller {
         return view('emails.create');
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-        $input = Request::all();
-
-        Email::create($input);
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param CreateEmailRequest $request
+     * @return Response
+     */
+	public function store(CreateEmailRequest $request)
+    {
+        Email::create($request->all());
 
         return redirect('emails');
 	}
