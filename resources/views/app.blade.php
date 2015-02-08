@@ -46,6 +46,7 @@
 
             <!-- Left Nav Section -->
             <ul class="left">
+                <li><a href="/emails">Emails</a></li>
                 <li><a href="/about">About</a></li>
             </ul>
         </section>

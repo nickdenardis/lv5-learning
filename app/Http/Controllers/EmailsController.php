@@ -1,5 +1,6 @@
 <?php namespace Incremently\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Incremently\Email;
 use Incremently\Http\Requests;
 use Incremently\Http\Controllers\Controller;
@@ -38,7 +39,10 @@ class EmailsController extends Controller {
      */
 	public function store(EmailRequest $request)
     {
-        Email::create($request->all());
+
+        $email = new Email($request->all());
+
+        Auth::user()->emails()->save($email);
 
         return redirect('emails');
 	}

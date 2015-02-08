@@ -31,4 +31,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+    /**
+     * User can have multiple emails
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function emails()
+    {
+        return $this->hasMany('Incremently\Email');
+    }
+
 }
