@@ -31,6 +31,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+    protected $casts = [
+        'is_admin' => 'boolean',
+    ];
+
     /**
      * User can have multiple emails
      *
@@ -48,7 +52,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @return bool
      */
     public function isAdmin(){
-        return ($this->is_admin != 0);
+        return ($this->is_admin);
     }
 
 }
