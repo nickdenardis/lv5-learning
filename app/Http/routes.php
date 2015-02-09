@@ -12,7 +12,6 @@
 */
 
 Route::get('/', 'HomeController@index');
-Route::get('home', 'HomeController@index');
 
 Route::get('about', 'PagesController@about');
 Route::get('emails/all', 'EmailsController@all');
