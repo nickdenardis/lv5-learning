@@ -16,6 +16,14 @@
 
 <div class="row">
     <div class="large-12 columns">
+        {!! Form::label('tag_list', 'Tags:', ['class' => ($errors->has('tag_list')?'error':'')] ) !!}
+        {!! Form::select('tag_list[]', $tags, null, ['class' => ($errors->has('tag_list')?'error':''), 'multiple'] ) !!}
+        @if ($errors->has('tag_list')) <small class="error">{{ $errors->first('tag_list') }}</small> @endif
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
         {!! Form::submit($submitButtonText, ['class' => 'button radius']) !!}
     </div>
 </div>

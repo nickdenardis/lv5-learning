@@ -6,46 +6,54 @@ use Incremently\Http\Requests;
 use Incremently\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Incremently\Http\Requests\EmailRequest;
+use Incremently\Tag;
 
 class EmailsController extends Controller {
 
-    public function __construct(){
-        $this->middleware('auth');
-        $this->middleware('admin', ['only' => 'all']);
+    /**
+     * Create a new email instance
+     */
+    public function __construct()
+    {
+        $this->middleware( 'auth' );
+        $this->middleware( 'admin', ['only' => 'all'] );
     }
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
         $emails = Auth::user()->emails()->latest( 'updated_at' )->get();
 
-        return view('emails.index', compact('emails'));
-	}
+        return view( 'emails.index', compact( 'emails' ) );
+    }
 
     /**
      * Display a list of all emails in the system
      *
      * @return \Illuminate\View\View
      */
-    public function all(){
-        $emails = Email::latest('updated_at')->get();
+    public function all()
+    {
+        $emails = Email::latest( 'updated_at' )->get();
 
-        return view('emails.all', compact('emails'));
+        return view( 'emails.all', compact( 'emails' ) );
     }
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-        return view('emails.create');
-	}
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        $tags = Tag::lists( 'name', 'id' );
+
+        return view( 'emails.create', compact( 'tags' ) );
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -53,43 +61,51 @@ class EmailsController extends Controller {
      * @param EmailRequest $request
      * @return Response
      */
-	public function store(EmailRequest $request)
+    public function store( EmailRequest $request )
     {
+        // Create the new email object with the form submission
+        $email = new Email( $request->all() );
 
-        $email = new Email($request->all());
+        // Save the email and return it's contents
+        $email = Auth::user()->emails()->save( $email );
 
-        Auth::user()->emails()->save($email);
+        // Attach all the tags submitted to this new email
+        $this->syncTags( $email, $request->input( 'tag_list' ) );
 
-        flash()->success('Successfully added email!');
+        // Create a message for the user
+        flash()->success( 'Successfully added email!' );
 
-        return redirect('emails');
-	}
+        // Redirect back to the list
+        return redirect( 'emails' );
+    }
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-        $email = Email::findOrFail($id);
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function show( $id )
+    {
+        $email = Email::findOrFail( $id );
 
-        return view('emails.show', compact('email'));
-	}
+        return view( 'emails.show', compact( 'email' ) );
+    }
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-        $email = Email::findOrFail($id);
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function edit( $id )
+    {
+        $email = Email::findOrFail( $id );
 
-		return view('emails.edit', compact('email'));
-	}
+        $tags = Tag::lists( 'name', 'id' );
+
+        return view( 'emails.edit', compact( 'email', 'tags' ) );
+    }
 
     /**
      * Update the specified resource in storage.
@@ -98,26 +114,44 @@ class EmailsController extends Controller {
      * @param EmailRequest $request
      * @return Response
      */
-	public function update($id, EmailRequest $request)
-	{
-        $email = Email::findOrFail($id);
+    public function update( $id, EmailRequest $request )
+    {
+        // Find the email to edit
+        $email = Email::findOrFail( $id );
 
-        $email->update($request->all());
+        // Update based on the submitted fields
+        $email->update( $request->all() );
 
-        flash()->success('Successfully edited email!');
+        // Attach all the tags submitted to this new email
+        $email->tags()->sync( $request->input( 'tag_list' ) );
 
-        return redirect('emails');
-	}
+        // Create a message for the user
+        flash()->success( 'Successfully edited email!' );
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
+        // Return the user to the list
+        return redirect( 'emails' );
+    }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function destroy( $id )
+    {
+        //
+    }
+
+    /**
+     * Sync the tags on the email
+     *
+     * @param Email $email
+     * @param array $tags
+     */
+    private function syncTags( Email $email, array $tags )
+    {
+        // Add and remove the tag associations
+        $email->tags()->sync( $tags );
+    }
 }
