@@ -17,7 +17,7 @@
 <div class="row">
     <div class="large-12 columns">
         {!! Form::label('tag_list', 'Tags:', ['class' => ($errors->has('tag_list')?'error':'')] ) !!}
-        {!! Form::select('tag_list[]', $tags, null, ['class' => ($errors->has('tag_list')?'error':''), 'multiple'] ) !!}
+        {!! Form::select('tag_list[]', $tags, null, ['id' => 'tag_list', 'class' => ($errors->has('tag_list')?'error':''), 'multiple'] ) !!}
         @if ($errors->has('tag_list')) <small class="error">{{ $errors->first('tag_list') }}</small> @endif
     </div>
 </div>
@@ -27,3 +27,12 @@
         {!! Form::submit($submitButtonText, ['class' => 'button radius']) !!}
     </div>
 </div>
+
+@section('footer')
+    <script>
+        $('#tag_list').select2({
+            placeholder: 'Choose a tag',
+            tags: true
+        });
+    </script>
+@endsection
