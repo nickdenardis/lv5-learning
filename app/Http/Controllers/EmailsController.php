@@ -116,7 +116,6 @@ class EmailsController extends Controller {
      */
     public function update( $id, EmailRequest $request )
     {
-        dd($request->all());
         // Find the email to edit
         $email = Email::findOrFail( $id );
 
