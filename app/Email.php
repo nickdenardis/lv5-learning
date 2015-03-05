@@ -8,6 +8,7 @@ class Email extends Model {
     protected $fillable = [
         'title',
         'body',
+        'template_id',
     ];
 
     /**
@@ -17,6 +18,15 @@ class Email extends Model {
      */
     public function user( ){
         return $this->belongsTo('Incremently\User');
+    }
+
+    /**
+     * An email belongs to a template
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function template(){
+        return $this->belongsTo('Incremently\Template');
     }
 
     /**

@@ -5,7 +5,7 @@
         <div class="large-12 columns">
             <h1>{{ $email->title }}</h1>
 
-            <p>{{ $email->body }}</p>
+            <iframe src="/emails/{{ $email->id }}/preview" width="700" height="1400" ></iframe>
 
             @unless($email->tags->isEmpty())
                 <ul>

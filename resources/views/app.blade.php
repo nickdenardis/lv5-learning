@@ -51,6 +51,7 @@
             <!-- Left Nav Section -->
             <ul class="left">
                 <li><a href="/emails">Emails</a></li>
+                <li><a href="/templates">Templates</a></li>
                 <li><a href="/about">About</a></li>
             </ul>
         </section>
@@ -64,10 +65,11 @@
 
 	@yield('content')
 
-	<!-- Scripts -->
+	<!-- Scripts    -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.0/js/foundation.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/js/select2.min.js"></script>
+
     <script>
         $(document).ready(function(){
             $(document).foundation();

@@ -45,6 +45,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasMany('Incremently\Email');
     }
 
+    /**
+     * User can have multiple templates
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function templates() {
+        return $this->hasMany('Incremently\Template', 'creator_id');
+    }
+
 
     /**
      * Is the user an admin in the system

@@ -1,5 +1,13 @@
 <div class="row">
     <div class="large-12 columns">
+        {!! Form::label('template_id', 'Template:', ['class' => ($errors->has('template_id')?'error':'')] ) !!}
+        {!! Form::select('template_id', $templates, null, ['id' => 'template_id', 'class' => ($errors->has('template_id')?'error':'')] ) !!}
+        @if ($errors->has('template_id')) <small class="error">{{ $errors->first('template_id') }}</small> @endif
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
         {!! Form::label('title', 'Title:', ['class' => ($errors->has('title')?'error':'')] ) !!}
         {!! Form::text('title', null, ['class' => ($errors->has('title')?'error':'')] ) !!}
         @if ($errors->has('title')) <small class="error">{{ $errors->first('title') }}</small> @endif

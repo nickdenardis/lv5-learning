@@ -19,6 +19,7 @@
                 <thead>
                     <tr>
                         <th>Email Name</th>
+                        <th>Template</th>
                         <th width="20%">Last Updated</th>
                     </tr>
                 </thead>
@@ -26,6 +27,7 @@
             @foreach($emails as $message)
                 <tr>
                     <td><a href="{{ action('EmailsController@show', [$message->id]) }}">{{ $message->title }}</a></td>
+                    <td>{{ $message->template->name }}</td>
                     <td>{{ $message->updated_at }}</td>
                 </tr>
             @endforeach

@@ -7,6 +7,7 @@ use Incremently\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Incremently\Http\Requests\EmailRequest;
 use Incremently\Tag;
+use Incremently\Template;
 
 class EmailsController extends Controller {
 
@@ -26,7 +27,7 @@ class EmailsController extends Controller {
      */
     public function index()
     {
-        $emails = Auth::user()->emails()->latest( 'updated_at' )->get();
+        $emails = Auth::user()->emails()->with('template')->latest( 'updated_at' )->get();
 
         return view( 'emails.index', compact( 'emails' ) );
     }
@@ -38,7 +39,7 @@ class EmailsController extends Controller {
      */
     public function all()
     {
-        $emails = Email::latest( 'updated_at' )->get();
+        $emails = Email::latest( 'updated_at' )->with('template')->get();
 
         return view( 'emails.all', compact( 'emails' ) );
     }
@@ -51,8 +52,9 @@ class EmailsController extends Controller {
     public function create()
     {
         $tags = Tag::lists( 'name', 'id' );
+        $templates = Template::lists('name', 'id');
 
-        return view( 'emails.create', compact( 'tags' ) );
+        return view( 'emails.create', compact( 'tags', 'templates' ) );
     }
 
     /**
@@ -70,7 +72,7 @@ class EmailsController extends Controller {
         $email = Auth::user()->emails()->save( $email );
 
         // Attach all the tags submitted to this new email
-        $this->syncTags( $email, $request->input( 'tag_list' ) );
+        $this->syncTags( $email, (array)$request->input( 'tag_list' ) );
 
         // Create a message for the user
         flash()->success( 'Successfully added email!' );
@@ -93,6 +95,23 @@ class EmailsController extends Controller {
     }
 
     /**
+     * Combine the email body with the template body
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function preview( $id )
+    {
+        $email = Email::findOrFail( $id );
+        $template_body = $email->template->body;
+
+        $fields = ['%TITLE%', '%CONTENT%'];
+        $values = [$email->title, $email->body];
+
+        return str_replace($fields, $values, $template_body);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id
@@ -103,8 +122,9 @@ class EmailsController extends Controller {
         $email = Email::findOrFail( $id );
 
         $tags = Tag::lists( 'name', 'id' );
+        $templates = Template::lists('name', 'id');
 
-        return view( 'emails.edit', compact( 'email', 'tags' ) );
+        return view( 'emails.edit', compact( 'email', 'tags', 'templates' ) );
     }
 
     /**
@@ -123,7 +143,7 @@ class EmailsController extends Controller {
         $email->update( $request->all() );
 
         // Attach all the tags submitted to this new email
-        $email->tags()->sync( $request->input( 'tag_list' ) );
+        $email->tags()->sync( (array)$request->input( 'tag_list' ) );
 
         // Create a message for the user
         flash()->success( 'Successfully edited email!' );
