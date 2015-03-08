@@ -143,7 +143,7 @@ class EmailsController extends Controller {
         $email->update( $request->all() );
 
         // Attach all the tags submitted to this new email
-        $email->tags()->sync( (array)$request->input( 'tag_list' ) );
+        $this->syncTags( $email, (array)$request->input( 'tag_list' ) );
 
         // Create a message for the user
         flash()->success( 'Successfully edited email!' );
@@ -171,7 +171,34 @@ class EmailsController extends Controller {
      */
     private function syncTags( Email $email, array $tags )
     {
+        // Ensure all new tags are in the database
+        $tags = $this->createTags($tags);
+        
         // Add and remove the tag associations
         $email->tags()->sync( $tags );
+    }
+
+    /**
+     * Find or create new tags
+     *
+     * @param array $tags
+     * @return array
+     */
+    private function createTags(array $tags)
+    {
+        $tag_ids = [];
+
+        foreach($tags as $tag) {
+            if (filter_var($tag, FILTER_VALIDATE_INT)){
+                $params = ['id' => $tag];
+            } else {
+                $params = ['name' => $tag];
+            }
+
+            $tag = Tag::firstOrCreate($params);
+            $tag_ids[] = $tag->id;
+        }
+
+        return $tag_ids;
     }
 }

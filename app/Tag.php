@@ -14,7 +14,8 @@ class Tag extends Model {
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function emails( ){
+    public function emails()
+    {
         return $this->belongsToMany('Incremently\Email');
     }
 }

@@ -5,7 +5,7 @@
         <div class="large-12 columns">
             <h1>Emails</h1>
 
-            {!! Html::link('emails/create', 'Add an Email', ['class' => 'button radius']) !!}
+            {!! Html::link('emails/create', 'Add an Email', ['class' => 'button radius small']) !!}
 
             @if (Auth::user()->isAdmin())
                 <dl class="sub-nav">
