@@ -4,6 +4,7 @@
     cd lv5-learning
     git flow init
     cp .env.example .env
+    touch storage/database.sqlite
     php artisan migrate
     bower install
     npm install
