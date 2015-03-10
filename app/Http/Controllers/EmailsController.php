@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Incremently\Http\Requests\EmailRequest;
 use Incremently\Tag;
 use Incremently\Template;
+use Incremently\User;
 
 class EmailsController extends Controller {
 
@@ -54,7 +55,7 @@ class EmailsController extends Controller {
         $tags = Tag::lists( 'name', 'id' );
         $templates = Template::lists('name', 'id');
 
-        return view( 'emails.create', compact( 'tags', 'templates' ) );
+        return view( 'emails.create', compact('tags', 'templates') );
     }
 
     /**
