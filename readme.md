@@ -5,6 +5,7 @@
     git flow init
     cp .env.example .env
     touch storage/database.sqlite
+    composer install
     php artisan migrate
     bower install
     npm install
