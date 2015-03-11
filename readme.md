@@ -6,7 +6,7 @@
     cp .env.example .env
     touch storage/database.sqlite
     composer install
-    php artisan migrate
+    php artisan migrate --seed
     bower install
     npm install
     gulp
